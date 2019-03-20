@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kafka-rest
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka-rest
+    spec:
+      containers:
+      - name: kafka-rest
+        image: confluentinc/cp-kafka-rest
+        ports:
+        - containerPort: 8082
+        env: 
+        - name: KAFKA_REST_BOOTSTRAP_SERVERS
+          value: PLAINTEXT://kaf1:9092,PLAINTEXT://kaf2:9093
+        - name: KAFKA_REST_ZOOKEEPER_CONNECT
+          value: zookeeper1:32181,zookeeper2:32181
+        - name: KAFKA_REST_HOST_NAME
+          value: kafka-rest
+        
